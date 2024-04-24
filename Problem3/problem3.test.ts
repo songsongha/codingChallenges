@@ -1,20 +1,24 @@
-import { fizz_buzz } from "./problem3"
+import { recursiveMax } from "./problem3"
 
-describe("FizzBuzz", () => {
-    test('[3] should result in "fizz"', () => {
-      expect(fizz_buzz([3])).toBe('fizz')
+describe("recursiveMax", () => {
+    it('should return null if input is null', () => {
+      expect(recursiveMax(null)).toBe(null)
     });
 
-    test('[5] should result in "buzz"', () => {
-      expect(fizz_buzz([5])).toBe('buzz')
+    it('should return null if array is empty', () => {
+      expect(recursiveMax([])).toBe(null)
     });
 
-    test('[15] should result in "fizzbuzz"', () => {
-      expect(fizz_buzz([15])).toBe('fizzbuzz')
+    it('should return the correct value if the input contains negative numbers', () => {
+      expect(recursiveMax([-3, -2, -1])).toBe(-1)
     });
 
-    test('[1,2,3] should result in "1, 2, fizz"', () => {
-      expect(fizz_buzz([3])).toBe('fizz')
+    it('should return the correct value if the input contains positive numbers', () => {
+      expect(recursiveMax([3, 2, 1])).toBe(3)
+    });
+
+    it('should return the correct value if the input has length of one', () => {
+      expect(recursiveMax([3])).toBe(3)
     });
 
 });
