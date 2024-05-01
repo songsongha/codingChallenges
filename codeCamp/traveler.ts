@@ -6,7 +6,7 @@ Write a function 'gridTraveler(m, n)' to calculate this
 */
 
 type TravelMemo = Record<string, number>
-// recursive, but hangs on larger numbers like 18
+// recursive, but hangs on larger numbers like 18 O(2^n+m)
 const gridTraveler = (m: number , n: number): number => {
     if ( m === 0 || n === 0) return 0
     if ( m === 1 && n === 1) return 1
@@ -15,8 +15,7 @@ const gridTraveler = (m: number , n: number): number => {
 
 console.log(gridTraveler(3,3)) // 6
 
-// memoized
-
+// memoized m * n combinations O(m*n) time 
 const gridTraveler2 = (m: number, n: number, memo:TravelMemo = {}): number =>{
     if ( m === 0 || n === 0) return 0
     if ( m === 1 && n === 1) return 1
