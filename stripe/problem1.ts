@@ -35,3 +35,9 @@ returns: ["fr-FR"]
 parse_accept_language("en-US", ["en-US", "fr-CA"]) 
 returns: ["en-US"]
 */
+
+export const parse_accept_language = (header: string, supportedLanguages: Set<string>): string[] =>{
+    if (!header || !supportedLanguages.size) return []
+    const headerArray = header.split(', ')
+    return headerArray.filter(tag => supportedLanguages.has(tag))
+}
