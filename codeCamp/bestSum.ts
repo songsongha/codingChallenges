@@ -2,6 +2,18 @@
 The function should return an array containing the shortest combination of numbers that add up to exactly targetSum.
 If there is a tie for the shortest combination, return any one of the shortest */
 
+/// m = target sum
+// n = numArray.length
+// Brute Force
+// time: O(n^m * m) => farthest leaf will be at worst m levels away (if m-1 was all the way down) and the number of branches is the number of elements in the array
+// the extra m is beause of the copying of the array
+// space: 0(m^2) => becuase only one branch at a time is put on the stack frame so max stack depth is m but each recursive call 
+// also has the shortestCombination array which could have a max length of m (all ones perhaps) so space is m*m
+
+// Memomized
+// time: O(n*m^2)number of branches is reduced we don't need to call every branch, complexity turns to number of levels in the tree times the number of branches, the extra m is for the copying the array
+// space: O(m^2) one branch at a time is put on the stack frame but we also have to account for the space of the memo array 
+
 type BestSumMemo = Record<number, number[]| null>
 
 const bestSum = (targetSum: number, numArray: number[], memo: BestSumMemo = {} ): number[] | null => {
