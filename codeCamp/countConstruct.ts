@@ -6,6 +6,16 @@ You may reuse elements of wordBank as many times as needed.
 
 */
 
+// m = target.length
+// n = wordBank.length
+
+// brute force
+// time: O(m*n^m) => number of branches is n multiplied m number of levels and you need to account for time to slice
+// space: O(m^2) => account for the farthest leaf and the space for the slice
+// memoized
+// time: O(n*m^2) => not all branches are needed, the max is n*m and you need to account for time to slice (m)
+// space O(m^2)
+
 type CountConstructMemo = Record<string, number>
 
 const countConstruct = (target: string, wordBank: string[], memo: CountConstructMemo = {}): number => {
