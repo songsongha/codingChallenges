@@ -24,3 +24,24 @@ const canSum = (targetSum: number, numArray: number[], memo: CanSumMemo = {} ): 
 }
 
 console.log(canSum(115,[5,14]))
+
+/* 
+Time complexity O(mn)
+Space complexity O(m)
+*/
+const canSumTabulation = (targetSum: number, numArray: number[]) => {
+    const table = Array(targetSum + 1).fill(false)
+    table[0] = true
+    for (let i = 0; i <= targetSum; i++) {
+        if (table[i] === true){
+            for (let num of numArray){
+                table[i + num] = true
+            }
+        }
+    }
+    return table[targetSum]
+}
+
+console.log(canSumTabulation(7,[5,3,4])) // true
+console.log(canSumTabulation(8, [2,3,5])) // true
+console.log(canSumTabulation(300,[7,14])) // false
