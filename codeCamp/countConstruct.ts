@@ -39,3 +39,25 @@ console.log(countConstruct('purple', ['purp', 'p', 'ur', 'le', 'purpl'])) // 2
 console.log(countConstruct('skateboard', ['bo', 'rd', 'ate','t', 'ska', 'sk', 'boar'])) // 0
 console.log(countConstruct('enterapotentpot', ['a','p','ent','enter', 'ot', 'o', 't'])) // 4
 console.log(countConstruct('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef', ['e', 'ee', 'eee', 'eeeeee', 'eeeeeeeee', 'eeeeeeeeee']))
+
+// Tabulation method
+// represent in a table the substring upto but not including the current index
+const countConstructTabulation = (target: string, wordBank: string[]): number => {
+    const table = new Array(target.length + 1).fill(0)
+    table[0] = 1
+    for (let i = 0; i <= target.length; i++) {
+        if (table[i]) {
+            for (let word of wordBank) {
+                if (target.slice(i,word.length) === word) table[i + word.length] += 1
+            }
+        }
+    }
+    console.log({table})
+    return table[target.length]
+
+}
+console.log(countConstructTabulation('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd'])) // 1
+console.log(countConstructTabulation('purple', ['purp', 'p', 'ur', 'le', 'purpl'])) // 2
+console.log(countConstructTabulation('skateboard', ['bo', 'rd', 'ate','t', 'ska', 'sk', 'boar'])) // 0
+console.log(countConstructTabulation('enterapotentpot', ['a','p','ent','enter', 'ot', 'o', 't'])) // 4
+console.log(countConstructTabulation('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef', ['e', 'ee', 'eee', 'eeeeee', 'eeeeeeeee', 'eeeeeeeeee']))

@@ -33,8 +33,32 @@ const result: string[][] = []
     return result
 }
 
-console.log(allConstruct('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd'])) // 1
-console.log(allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purpl'])) // 2
-console.log(allConstruct('skateboard', ['bo', 'rd', 'ate','t', 'ska', 'sk', 'boar'])) // 0
-console.log(allConstruct('enterapotentpot', ['a','p','ent','enter', 'ot', 'o', 't'])) // 4
-console.log(allConstruct('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef', ['e', 'ee', 'eee', 'eeeeee', 'eeeeeeeee', 'eeeeeeeeee']))
+// console.log(allConstruct('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd'])) // 1
+// console.log(allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purpl'])) // 2
+// console.log(allConstruct('skateboard', ['bo', 'rd', 'ate','t', 'ska', 'sk', 'boar'])) // 0
+// console.log(allConstruct('enterapotentpot', ['a','p','ent','enter', 'ot', 'o', 't'])) // 4
+// console.log(allConstruct('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef', ['e', 'ee', 'eee', 'eeeeee', 'eeeeeeeee', 'eeeeeeeeee']))
+
+// Tabulation method
+
+const allConstructTabulation = (target: string, wordBank: string[]) => {
+    const table: string[][][] = new Array(target.length + 1).fill([]).map(()=>[])
+    // console.log({table})
+    // console.log('table[0]', table[0])
+    table[0] = [[]]
+    for (let i = 0; i <= target.length; i++) {
+            for (let word of wordBank) {
+                if (target.slice(i,i + word.length) === word) {
+                    const newCombination = table[i].map(subArray => [...subArray, word])
+                    table[i + word.length].push(...newCombination)
+                }
+            }
+    }
+    return table[target.length]
+}
+
+console.log(allConstructTabulation('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd'])) 
+console.log(allConstructTabulation('purple', ['purp', 'p', 'ur', 'le', 'purpl'])) 
+console.log(allConstructTabulation('skateboard', ['bo', 'rd', 'ate','t', 'ska', 'sk', 'boar'])) 
+console.log(allConstructTabulation('enterapotentpot', ['a','p','ent','enter', 'ot', 'o', 't']))
+console.log(allConstructTabulation('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef', ['e', 'ee', 'eee', 'eeeeee', 'eeeeeeeee', 'eeeeeeeeee'])) // will exceed stack size
