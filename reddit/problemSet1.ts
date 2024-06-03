@@ -37,3 +37,23 @@ export const arrayToObject = (arr: number[]): Record<number, number>  => {
         return acc 
     }, {})
 }
+
+// Question 2 -> use codepen.io
+/*
+<div>
+    <button onClick=alertFunction() id=“my-id”>click me</button>
+</div>
+
+
+<script>
+function alertFunction() {
+  alert("I am an alert box!");
+}
+</script>
+
+ // CSS code
+ 
+button {
+  background: red;
+}
+*/
