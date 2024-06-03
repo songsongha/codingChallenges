@@ -52,8 +52,36 @@ function alertFunction() {
 </script>
 
  // CSS code
- 
+
 button {
   background: red;
 }
 */
+
+// Question 3:
+
+export const countIslands = (seaChart: number[][]) => {
+    function dfs(row: number, col: number) {
+        if (row < 0 || col < 0 || row >= seaChart.length || col >= seaChart[0].length || seaChart[row][col] === 0) {
+            return;
+        }
+        seaChart[row][col] = 0; // Mark current cell as visited
+        // Check neighboring cells
+        dfs(row + 1, col); // Down
+        dfs(row - 1, col); // Up
+        dfs(row, col + 1); // Right
+        dfs(row, col - 1); // Left
+    }
+
+    let count = 0;
+    for (let rowIndex = 0; rowIndex < seaChart.length; rowIndex++){
+        for(let colIndex = 0; colIndex < seaChart[0].length; colIndex++){
+            if (seaChart[rowIndex][colIndex] === 1){
+                count++
+                dfs(rowIndex,colIndex)
+            }
+        }
+    }
+    return count
+}
+

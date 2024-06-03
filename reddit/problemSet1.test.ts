@@ -1,4 +1,4 @@
-import { arrayToObject } from "./problemSet1"
+import { arrayToObject, countIslands } from "./problemSet1"
 
 
 describe("arrayToObject", () => {
@@ -12,5 +12,36 @@ describe("arrayToObject", () => {
         const numArr: number[] = []
         expect(arrayToObject(numArr)).toMatchObject({})
       })
+})
 
+describe.only("findIslands", ()=>{
+    it('should return the correct number of islands for a given 2D array', ()=>{
+        const seaChart = [
+            [1, 1, 0, 0, 0],
+            [1, 1, 0, 0, 0],
+            [0, 0, 1, 0, 0],
+            [0, 0, 0, 1, 1]
+        ]
+        expect(countIslands(seaChart)).toBe(3)
+
+    })
+    it('should return the correct number of islands for a given 2D array with irregular shaped islands', ()=>{
+        const seaChart = [
+            [1, 1, 1, 1, 0],
+            [1, 1, 0, 1, 0],
+            [0, 1, 1, 0, 1],
+            [0, 0, 0, 1, 0]
+        ]
+        expect(countIslands(seaChart)).toBe(3)
+    })
+    it('should return the correct number of islands if the array is all 1s', ()=>{
+        const seaChart = new Array(5).fill(new Array(6).fill(1))
+        expect(countIslands(seaChart)).toBe(1)
+
+    })
+    it('should return the correct number of islands if the array is all 0s', ()=>{
+        const seaChart = new Array(5).fill(new Array(6).fill(0))
+        expect(countIslands(seaChart)).toBe(0)
+
+    })
 })
