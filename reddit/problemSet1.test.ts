@@ -1,4 +1,4 @@
-import { arrayToObject, countIslands } from "./problemSet1"
+import { arrayToObject, countIslands, findFirstSumSet } from "./problemSet1"
 
 
 describe("arrayToObject", () => {
@@ -14,7 +14,7 @@ describe("arrayToObject", () => {
       })
 })
 
-describe.only("findIslands", ()=>{
+describe("findIslands", ()=>{
     it('should return the correct number of islands for a given 2D array', ()=>{
         const seaChart = [
             [1, 1, 0, 0, 0],
@@ -43,5 +43,33 @@ describe.only("findIslands", ()=>{
         const seaChart = new Array(5).fill(new Array(6).fill(0))
         expect(countIslands(seaChart)).toBe(0)
 
+    })
+})
+
+describe("findFirstSumSet", ()=>{
+    it('should the correct values for a given arr', ()=>{
+        const arr = [2, 7, 11, 14, 17]
+        const targetSum = 9
+
+        const result = findFirstSumSet(arr, targetSum)
+        expect(result).toEqual(expect.arrayContaining([2,7]))
+        expect(result?.length).toBe(2)
+
+    })
+    it('should return repeated values if that is an option for the sum', ()=>{
+        const arr = [2, 7, 11, 14, 17]
+        const targetSum = 8
+
+        const result = findFirstSumSet(arr, targetSum)
+        expect(result).toEqual(expect.arrayContaining([2,2,2,2]))
+        expect(result?.length).toBe(4)
+
+    })
+    it('should return null if there are no options for adding up to the sum', ()=>{
+        const arr = [2, 10, 11, 14, 17]
+        const targetSum = 9
+
+        const result = findFirstSumSet(arr, targetSum)
+        expect(result).toEqual(null)
     })
 })

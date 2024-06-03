@@ -19,7 +19,7 @@ Question 3: algorithms - take the following graph and make a function to find th
 ]
 
 
-Question 4: take this array of numbers and create a function that returns the indices of numbers that add up to a given number.
+Question 4: take this array of numbers and create a function that returns the first set of numbers in the array that add up to a given number.
 ex.
 nums = [2, 7, 11, 14, 17]
 given = 9
@@ -60,7 +60,7 @@ button {
 
 // Question 3:
 
-export const countIslands = (seaChart: number[][]) => {
+export const countIslands = (seaChart: number[][]): number => {
     function dfs(row: number, col: number) {
         if (row < 0 || col < 0 || row >= seaChart.length || col >= seaChart[0].length || seaChart[row][col] === 0) {
             return;
@@ -85,3 +85,23 @@ export const countIslands = (seaChart: number[][]) => {
     return count
 }
 
+// Question 4
+// assumptions: can reuse elements from the array
+export const findFirstSumSet = ( arr: number [], targetSum: number, memo: Record<number, number[] | null> = {} ): number[] | null => {
+    if (targetSum === 0) return []
+    if (targetSum < 0) return null
+    if (targetSum in memo) return memo[targetSum]
+
+    for (const num of arr){
+        // check element of the array
+        const newTargetSum = targetSum - num
+        const result = findFirstSumSet(arr, newTargetSum)
+        if (result !== null){
+            memo[targetSum] = [...result, num]
+            return memo[targetSum]
+        }
+
+    }
+    memo[targetSum] = null
+    return null
+}
