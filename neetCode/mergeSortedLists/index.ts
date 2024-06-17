@@ -38,7 +38,7 @@ const sortLinkedList = (head: ListNode | null): ListNode | null => {
     // turn list into an array
     const array = createArrayFromLinkedList(head)
     // sort array
-    array.sort()
+    array.sort((a,b)=>(Number(a)- Number(b)))
     // turn back into an array
     return createLinkedListFromArray(array)
 
@@ -65,6 +65,6 @@ function mergeTwoLists(list1: ListNode | null, list2: ListNode | null): ListNode
     
 };
 
-const listOne = createLinkedListFromArray([])
-const listTwo = createLinkedListFromArray([0])
+const listOne = createLinkedListFromArray([-10,-3,-6,-6,-6,5])
+const listTwo = createLinkedListFromArray([])
 console.log(createArrayFromLinkedList(mergeTwoLists(listOne,listTwo)))
