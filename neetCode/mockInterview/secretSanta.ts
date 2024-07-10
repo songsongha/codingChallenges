@@ -24,27 +24,38 @@ on_record: (line: SecretSantaData) => {
     }
     return line.email
     }
-}, (error: Error, result: SecretSantaData[]) => {
+}, (error: Error, result: string[]) => {
 if (error) {
     console.error(error)
 }
 console.log({result})
-const receiverArray = [...result]
-// random pairings
-const secretSantaList = result.map((giverEmail)=> {
-    let receiverIndex = Math.floor(Math.random() * receiverArray.length)
-    console.log({receiverIndex})
-    while (receiverArray[receiverIndex] === giverEmail){
-        receiverIndex = Math.floor(Math.random() * receiverArray.length)
-    }
-    console.log({receiverIndex})
-    const receiverEmail = receiverArray.splice(receiverIndex,1)[0]
-    console.log({receiverEmail})
-    console.log({receiverArray})
-    return [giverEmail, receiverEmail]
-})
 
-console.log({secretSantaList})
+// random pairings
+const createSecretSantaList = (emailList: string[])=>{
+    const receiverArray = [...emailList]
+    const secretSantaList = emailList.map((giverEmail)=> {
+        let receiverIndex = Math.floor(Math.random() * receiverArray.length)
+        console.log({receiverIndex})
+        while (receiverArray[receiverIndex] === giverEmail){
+            if (receiverArray.length === 1){
+                return null
+            } else {
+                receiverIndex = Math.floor(Math.random() * receiverArray.length)
+            }
+        }
+        console.log({receiverIndex})
+        const receiverEmail = receiverArray.splice(receiverIndex,1)[0]
+        console.log({receiverEmail})
+        console.log({receiverArray})
+        return [giverEmail, receiverEmail]
+    })
+    if (secretSantaList.includes(null)) createSecretSantaList(result)
+    
+    return secretSantaList
+}
+
+
+console.log(createSecretSantaList(result))
 })
 
 
