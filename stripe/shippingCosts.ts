@@ -1,70 +1,70 @@
-export const shippingCost = (
-  inputString: string,
-  source: string,
-  dest: string,
-  shipper: string
-): any | null => {
-  const shippingArray = inputString.split(",");
-  //TODO fix any
-  let shippingObject: any = {};
-  const sourceArray: string[] = [];
-  const destArray: string[] = [];
+/* Shipping Cost Calculator
+Given a comma-separated string of shipping routes in the format source:destination:carrier:cost, write a function that finds the shipping cost between two locations using a specified carrier.
+The function should:
 
-  shippingArray.forEach((entry) => {
-    const entryArray = entry.split(":");
-    const [entrySource, entryDest, carrier, cost] = entryArray;
-    if (!shippingObject[entrySource]) {
-      shippingObject[entrySource] = {
-        [entryDest]: {
-          [carrier]: Number(cost),
-        },
-      };
-    } else if (!shippingObject[entrySource][entryDest]) {
-      shippingObject[entrySource][entryDest] = {
-        [carrier]: Number(cost),
-      };
-    } else {
-      shippingObject[entrySource][entryDest][carrier] = Number(cost);
-    }
-  });
+Direct route — If a direct route exists from source to dest with the given shipper, return the route, method, and cost.
+One-stop route — If no direct route exists, find a two-leg journey (source → intermediate → dest) and return the combined cost using the first available carrier for each leg.
+No route — If no path exists, return null.
 
-  if (
-    shippingObject[source] &&
-    shippingObject[source][dest] &&
-    shippingObject[source][dest][shipper]
-  )
-    return {
-      route: `${source} => ${dest}`,
-      method: shipper,
-      cost: shippingObject[source][dest][shipper],
-    };
+Return format:
+typescript{ route: "US => FR", method: "FedEx -> DHL", cost: 7 }
+ */
 
-  if (shippingObject[source] && !shippingObject[source][dest]) {
-    for (const key in shippingObject[source]) {
-      if (shippingObject[key]) {
-        const secondaryKeys = Object.keys(shippingObject[key]);
-        console.log({ secondaryKeys });
-        if (secondaryKeys.includes(dest)) {
-          const shipper1 = Object.keys(shippingObject[source][key])[0];
-          const shipper2 = Object.keys(shippingObject[key][dest])[0];
+const shippingCost = (inputString: string, source: string, dest: string, shipper: string): any | null => {
+    const shippingArray = inputString.split(',')
+    //TODO fix any
+    let shippingObject: any = {}
+    const sourceArray: string[] = []
+    const destArray: string[] = []
 
-          return {
-            route: `${source} => ${key} => ${dest}`,
-            method: `${shipper1} -> ${shipper2}`,
-            cost:
-              shippingObject[source][key][shipper1] +
-              shippingObject[key][dest][shipper2],
-          };
+    shippingArray.forEach((entry) => {
+        const entryArray = entry.split(':')
+        const [entrySource, entryDest, carrier, cost] = entryArray
+        if (!shippingObject[entrySource]) {
+            shippingObject[entrySource] = {
+                [entryDest]: {
+                    [carrier]: Number(cost)
+                }
+            }
+        } else if (!shippingObject[entrySource][entryDest]) {
+            shippingObject[entrySource][entryDest] = {
+                [carrier]: Number(cost)
+            }
+        } else {
+            shippingObject[entrySource][entryDest][carrier] = Number(cost)
         }
-      }
+    })
+
+    if (shippingObject[source] && shippingObject[source][dest] && shippingObject[source][dest][shipper])
+        return {
+            route: `${source} => ${dest}`,
+            method: shipper,
+            cost: shippingObject[source][dest][shipper]
+        }
+
+    if (shippingObject[source] && !shippingObject[source][dest]) {
+        for (const key in shippingObject[source]) {
+            if (shippingObject[key]) {
+                const secondaryKeys = Object.keys(shippingObject[key])
+                console.log({ secondaryKeys })
+                if (secondaryKeys.includes(dest)) {
+                    const shipper1 = Object.keys(shippingObject[source][key])[0]
+                    const shipper2 = Object.keys(shippingObject[key][dest])[0]
+
+                    return {
+                        route: `${source} => ${key} => ${dest}`,
+                        method: `${shipper1} -> ${shipper2}`,
+                        cost: shippingObject[source][key][shipper1] + shippingObject[key][dest][shipper2]
+                    }
+                }
+            }
+        }
     }
-  }
 
-  return null;
-};
+    return null
+}
 
-const inputString =
-  "US:UK:FedEx:5,UK:US:UPS:4,UK:CA:FedEx:7,US:CA:DHL:10,UK:FR:DHL:2";
+const inputString = 'US:UK:FedEx:5,UK:US:UPS:4,UK:CA:FedEx:7,US:CA:DHL:10,UK:FR:DHL:2'
 // console.log(shippingCost(inputString, 'US', 'UK', 'FedEx'))
-console.log(shippingCost(inputString, "US", "FR", "DHL"));
+console.log(shippingCost(inputString, 'US', 'FR', 'DHL'))
 // console.log(shippingCost(inputString, 'US', 'MX', 'DHL'))
